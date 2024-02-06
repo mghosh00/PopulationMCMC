@@ -1,0 +1,8 @@
+matplotlib
+numpy
+pandas
+scipy
+jupyter
+notebook
+plotnine
+pints
