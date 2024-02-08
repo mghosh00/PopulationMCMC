@@ -43,3 +43,9 @@ exclude_patterns = []
 
 html_theme = 'alabaster'
 html_static_path = []
+
+mathjax3_config = {
+    'chtml': {
+        'mtextInheritFont': 'true',
+    }
+}
