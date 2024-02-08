@@ -11,9 +11,10 @@ import scipy.integrate as si
 
 class ODESystem:
     r"""This class takes in the RHS of a system of ODEs in the form:
-    :math:`y'(t) = f(y, t; \theta), y(0) = y_{0},`
+    .. math::
+        y'(t) = f(y, t; \\theta), y(0) = y_{0},
     where :math:`y, f, y_{0}` are n-dimensional vectors, :math:`t` is a scalar
-    and :math:`\theta` is an m-dimensional parameter vector.
+    and :math:`\\theta` is an m-dimensional parameter vector.
 
     """
 
