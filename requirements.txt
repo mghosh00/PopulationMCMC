@@ -6,3 +6,4 @@ jupyter
 notebook
 plotnine
 pints
+sphinx
