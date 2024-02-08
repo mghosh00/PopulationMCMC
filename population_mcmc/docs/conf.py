@@ -19,7 +19,7 @@ author = "'Matthew Ghosh'"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode',
-              'sphinx.ext.napoleon']
+              'sphinx.ext.napoleon', 'sphinx.ext.mathjax']
 
 # Autodoc defaults
 if int(sphinx.__version__.split('.')[1]) < 8:
@@ -41,5 +41,5 @@ exclude_patterns = []
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'alabaster'
 html_static_path = []
