@@ -75,3 +75,13 @@ class LogPrior:
             raise ValueError(f"The length of theta must match the number of"
                              f"columns specified in self._bounds ({num_params}"
                              f" != {self._bounds.shape[0]})")
+
+    def get_std_devs(self) -> np.array:
+        """Gets the standard deviations from this `LogPrior`.
+
+        Returns
+        -------
+        np.array
+            The standard deviations
+        """
+        return self._std_devs

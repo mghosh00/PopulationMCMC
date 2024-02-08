@@ -28,7 +28,7 @@ class ODESystem:
             time t and returns the RHS of the ODE system, given parameters
             \theta
         y_init : np.array
-            The initial values of the ODE to be passed to the system
+            The initial values of y to be passed to the system
         times : np.array
             The times to be used for the numerical solution
         """
