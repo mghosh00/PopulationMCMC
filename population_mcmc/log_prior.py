@@ -25,6 +25,9 @@ class LogPrior:
         if bounds.shape[0] != 2 or bounds.shape[1] < 1:
             raise ValueError("bounds must have exactly 2 rows and at least"
                              "one column")
+        if not all(np.greater(bounds[1, :], bounds[0, :])):
+            raise ValueError("Lower bounds must be in the first row and"
+                             "upper bounds in the second row")
         self._bounds = bounds
         self._means = self._calculate_means()
         self._std_devs = self._calculate_std_devs()

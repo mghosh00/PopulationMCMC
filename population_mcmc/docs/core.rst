@@ -12,6 +12,7 @@ Overview:
 - :class:`DataGenerator`
 - :class:`LogPrior`
 - :class:`ODESystem`
+- :class:`Simulator`
 
 
 .. autoclass:: Chain
@@ -24,4 +25,7 @@ Overview:
     :members:
 
 .. autoclass:: ODESystem
+    :members:
+
+.. autoclass:: Simulator
     :members:

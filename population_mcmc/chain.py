@@ -52,17 +52,6 @@ class Chain:
         """
         return (self._id - 1) / self._num_chains
 
-    def set_params(self, theta: np.array):
-        """Whenever a new proposal for parameters succeeds, we set new
-        parameters for the chain.
-
-        Parameters
-        ----------
-        theta : np.array
-            A new array of parameters to be used for this chain
-        """
-        self._current_params = theta
-
     def _log_prior_pdf(self) -> float:
         """Calculates the pdf value of the log prior for the current set of
         parameters. We assume a multivariate normal prior centred around the
@@ -115,11 +104,11 @@ class Chain:
                                                            y_std_devs[j])
         return np.array(log_likelihoods)
 
-    def tempered_density(self, y_obs: np.array) -> np.array:
-        """Calculates the tempered density using the log prior, log likelihood
-        and tempering parameter. This will be equal to
-        :math:`(log(prior) + log(likelihood))(1 - T)`,
-        where :math:`T` is the tempering parameter.
+    def density(self, y_obs: np.array) -> np.array:
+        """Calculates the density using the log prior and log likelihood. This
+        will be equal to :math:`log(prior) + log(likelihood)`. Note that the
+        tempering will be done later as it is not necessary here.
+
         Parameters
         ----------
         y_obs : np.array
@@ -130,11 +119,11 @@ class Chain:
         Returns
         -------
         np.array
-            The vector of tempered densities for this specific chain.
+            The vector of densities for this specific chain.
         """
         log_prior = self._log_prior_pdf()
         log_likelihood = self._log_likelihood(y_obs)
-        return (log_prior + log_likelihood) * (1 - self._tempering)
+        return log_prior + log_likelihood
 
     def proposal(self) -> np.array:
         """Make a proposal for new parameters using the current ones as means
@@ -147,3 +136,38 @@ class Chain:
         """
         return np.random.normal(self._current_params,
                                 self._log_prior.get_std_devs())
+
+    def get_params(self) -> np.array:
+        """Retrieves the `current_params`
+
+        Returns
+        -------
+        np.array
+            The `current_params`
+        """
+        return self._current_params
+
+    def set_params(self, params: np.array):
+        """Whenever a new proposal for parameters succeeds, we set new
+        parameters for the chain. Note that these `params` include the standard
+        deviations.
+
+        Parameters
+        ----------
+        params : np.array
+            A new array of parameters to be used for this chain
+        """
+        self._current_params = params
+
+    def get_tempering(self) -> float:
+        """Retrieves the tempering parameter
+
+        Returns
+        -------
+        float
+            The tempering parameter
+        """
+        return self._tempering
+
+    def __str__(self):
+        return f"Chain {self._id} with parameters {self._current_params}"
