@@ -10,7 +10,7 @@ import scipy.integrate as si
 
 
 class ODESystem:
-    r"""This class takes in the RHS of a system of ODEs in the form:
+    """This class takes in the RHS of a system of ODEs in the form:
     .. math::
         y'(t) = f(y, t; \\theta), y(0) = y_{0},
     where :math:`y, f, y_{0}` are n-dimensional vectors, :math:`t` is a scalar
@@ -20,7 +20,7 @@ class ODESystem:
 
     def __init__(self, rhs: typing.Callable, y_init: np.array,
                  times: np.array):
-        r"""Constructor Method
+        """Constructor Method
 
         Parameters
         ----------
@@ -38,7 +38,7 @@ class ODESystem:
         self._y_init = y_init
 
     def solve(self, theta: np.array) -> pd.DataFrame:
-        r"""Given a parameter array theta, this will solve the ODE as described
+        """Given a parameter array theta, this will solve the ODE as described
         in the class definition.
 
         Parameters
