@@ -17,15 +17,25 @@ Overview:
 
 .. autoclass:: Chain
     :members:
+    :private-members:
+    :special-members:
 
 .. autoclass:: DataGenerator
     :members:
+    :private-members:
+    :special-members:
 
 .. autoclass:: LogPrior
     :members:
+    :private-members:
+    :special-members:
 
 .. autoclass:: ODESystem
     :members:
+    :private-members:
+    :special-members:
 
 .. autoclass:: Simulator
     :members:
+    :private-members:
+    :special-members:
