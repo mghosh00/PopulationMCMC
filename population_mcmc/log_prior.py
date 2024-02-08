@@ -18,8 +18,8 @@ class LogPrior:
         Parameters
         ----------
         bounds : np.array
-            A 2 x m array, where m is the number of parameters, containing the
-            lower and upper bounds of the parameters
+            A :math:`2 \\times m` array, where :math:`m` is the number of
+            parameters, containing the lower and upper bounds of the parameters
         """
         # Checks
         if bounds.shape[0] != 2 or bounds.shape[1] < 1:
@@ -35,8 +35,8 @@ class LogPrior:
         Returns
         -------
         np.array
-            An m-dimensional array, where m is the number of parameters,
-            representing the means of the :class:`LogPrior`
+            An m-dimensional array, where :math:`m` is the number of
+            parameters, representing the means of the :class:`LogPrior`
         """
         return np.mean(self._bounds, axis=0)
 
@@ -46,8 +46,9 @@ class LogPrior:
         Returns
         -------
         np.array
-            An m-dimensional array, where m is the number of parameters,
-            representing the standard deviations of the :class:`LogPrior`
+            An m-dimensional array, where :math:`m` is the number of
+            parameters, representing the standard deviations of the
+            :class:`LogPrior`
         """
         interval_lengths = self._bounds[1, :] - self._bounds[0, :]
         return interval_lengths / 8

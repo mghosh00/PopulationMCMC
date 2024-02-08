@@ -26,7 +26,7 @@ class ODESystem:
         rhs : typing.Callable
             A function f : R^{n} x R -> R^{n} which takes in a vector y and
             time t and returns the RHS of the ODE system, given parameters
-            \theta
+            :math:`\\theta`
         y_init : np.array
             The initial values of y to be passed to the system
         times : np.array
@@ -49,7 +49,7 @@ class ODESystem:
         -------
         pd.DataFrame
             A dataframe containing the solution, with columns for time and
-            each of the different y_i
+            each of the different :math:`y_{i}`
         """
         theta_tuple = tuple(map(tuple, theta))
         sol = si.odeint(self._rhs, self._y_init, self._times, args=theta_tuple)

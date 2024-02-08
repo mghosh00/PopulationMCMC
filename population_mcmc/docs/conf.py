@@ -28,6 +28,7 @@ else:
     autodoc_default_options = {
         'members': None,
         'inherited-members': None,
+        'private-members': True
     }
 
 master_doc = 'index'

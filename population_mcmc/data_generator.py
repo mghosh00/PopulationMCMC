@@ -10,8 +10,8 @@ from population_mcmc import ODESystem
 
 class DataGenerator:
     """This class generates random observed data for the solution of an
-    :class:`ODESystem` given ground truth parameter values (`theta`) and
-    some standard deviations away from these values in `sigma`.
+    :class:`ODESystem` given ground truth parameter values (`true_theta`)
+    and some standard deviations away from these values in `sigma`.
     """
 
     def __init__(self, ode_system: ODESystem, true_theta: np.array,
@@ -26,15 +26,17 @@ class DataGenerator:
             The ground truth parameter values used in solving the ODE (size =
             number of parameters)
         sigma : np.array
-            Standard deviations away from the true data (size = length of y)
+            Standard deviations away from the true data (size = length of
+            :math:`y`)
         """
         self._ode_system = ode_system
         self._true_theta = true_theta
         self._sigma = sigma
 
     def generate_observed_data(self) -> np.array:
-        """Generates data in the form of a :math:`p \times n` array where p is
-        the number of time steps and n is the length of y.
+        """Generates data in the form of a :math:`p \\times n` array where
+        :math:`p` is the number of time steps and :math:`n` is the length of
+        :math:`y`.
 
         Returns
         -------

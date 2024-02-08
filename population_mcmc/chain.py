@@ -84,8 +84,9 @@ class Chain:
         Parameters
         ----------
         y_obs : np.array
-            The observed data for y (a :math:`p \times n` array where p is the
-            number of time steps and n is the length of y)
+            The observed data for :math:`y` (a :math:`p \\times n` array where
+            :math:`p` is the number of time steps and :math:`n` is the length
+            of :math:`y`)
 
         Returns
         -------
@@ -117,13 +118,14 @@ class Chain:
     def tempered_density(self, y_obs: np.array) -> np.array:
         """Calculates the tempered density using the log prior, log likelihood
         and tempering parameter. This will be equal to
-        :math:`(log_prior + log_likelihood) * (1 - T)`,
-        where T is the tempering parameter.
+        :math:`(log(prior) + log(likelihood))(1 - T)`,
+        where :math:`T` is the tempering parameter.
         Parameters
         ----------
         y_obs : np.array
-            The observed data for y (a :math:`p x n` array where p is the
-            number of time steps and n is the length of `y`)
+            The observed data for :math:`y` (a :math:`p \\times n` array where
+            :math:`p` is the number of time steps and :math:`n` is the length
+            of :math:`y`)
 
         Returns
         -------
