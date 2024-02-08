@@ -11,14 +11,15 @@ import scipy.integrate as si
 
 class ODESystem:
     """This class takes in the RHS of a system of ODEs in the form:
-    y'(t) = f(y, t; \theta), y(0) = y_{0}, where y, f, y_{0} are n-dimensional
-    vectors, t is a scalar and \theta is an m-dimensional parameter vector.
+    :math:`y'(t) = f(y, t; \theta), y(0) = y_{0},`
+    where :math:`y, f, y_{0}` are n-dimensional vectors, :math:`t` is a scalar
+    and :math:`\theta` is an m-dimensional parameter vector.
 
     """
 
     def __init__(self, rhs: typing.Callable, y_init: np.array,
                  times: np.array):
-        """
+        """Constructor Method
 
         Parameters
         ----------
@@ -31,5 +32,13 @@ class ODESystem:
         times : np.array
             The times to be used for the numerical solution.
         """
-        pass
+        self._rhs = rhs
+        self._times = times
+        self._y_init = y_init
 
+    def solve(self, theta: np.array) -> pd.DataFrame:
+        """
+
+        :param theta:
+        :return:
+        """
