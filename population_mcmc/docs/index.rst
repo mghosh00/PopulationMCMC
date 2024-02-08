@@ -3,7 +3,7 @@
    contain the root `toctree` directive.
 
 Welcome to PopulationMCMC's documentation!
-=======================================
+==========================================
 
 This is a python backend for the population_mcmc package.
 

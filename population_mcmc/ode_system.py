@@ -14,7 +14,9 @@ class ODESystem:
         y'(t) = f(y, t; \theta), y(0) = y_{0},
     where y, f, y_{0} are n-dimensional vectors, t is a scalar and \theta is an
     m-dimensional parameter vector.
+
     """
+
     def __init__(self, rhs: typing.Callable, y_init: np.array,
                  times: np.array):
         """
@@ -29,3 +31,4 @@ class ODESystem:
         times : np.array
         """
         pass
+
