@@ -4,6 +4,7 @@
 
 import numpy as np
 import scipy as sp
+import pandas as pd
 
 from population_mcmc import ODESystem
 from population_mcmc import LogPrior
@@ -15,7 +16,7 @@ class Chain:
     """
 
     def __init__(self, chain_id: int, num_chains: int, ode_system: ODESystem,
-                 log_prior: LogPrior):
+                 log_prior: LogPrior, param_names: list[str]):
         """Constructor Method
 
         Parameters
@@ -30,6 +31,8 @@ class Chain:
             The system of ODEs to be solved
         log_prior : LogPrior
             The log prior to be used for the chain
+        param_names : list[str]
+            The list of parameter names
         """
         self._id = chain_id
         self._num_chains = num_chains
@@ -40,6 +43,8 @@ class Chain:
         self._log_prior = log_prior
         self._current_params = None
         self._tempering = self._calculate_tempering()
+        self._param_history = pd.DataFrame(columns=
+                                           ["t"] + param_names + ["id"])
 
     def _calculate_tempering(self) -> float:
         """Calculates the tempering parameter for the chain. This lies between
@@ -65,7 +70,7 @@ class Chain:
         """
         return self._log_prior(self._current_params)
 
-    def _log_likelihood(self, y_obs: np.array) -> np.array:
+    def _log_likelihood(self, y_obs: np.array) -> float:
         """Calculates the log likelihood of observed values, `y_obs`, given the
         `current_params`. To do this, the ODE system is solved and a float
         value is returned.
@@ -79,8 +84,8 @@ class Chain:
 
         Returns
         -------
-        np.array
-            The vector of likelihoods of `y_obs` given `current_params`
+        float
+            The sum of log likelihoods of `y_obs` given `current_params`
         """
         # This is to remove the standard deviations from the current_params
         num_time_steps, num_vars = y_obs.shape
@@ -102,7 +107,7 @@ class Chain:
                 log_likelihoods[j] += sp.stats.norm.logpdf(y_obs[i][j],
                                                            expected_sol[i][j],
                                                            y_std_devs[j])
-        return np.array(log_likelihoods)
+        return sum(log_likelihoods)
 
     def density(self, y_obs: np.array) -> np.array:
         """Calculates the density using the log prior and log likelihood. This
@@ -125,17 +130,54 @@ class Chain:
         log_likelihood = self._log_likelihood(y_obs)
         return log_prior + log_likelihood
 
-    def proposal(self) -> np.array:
+    def mutate(self, y_obs: np.array) -> bool:
         """Make a proposal for new parameters using the current ones as means
-        and the standard deviations of the prior
+        and the standard deviations of the prior. Then choose whether to accept
+        these parameters based on a Metropolis acceptance algorithm.
+
+        Parameters
+        ----------
+        y_obs : np.array
+            The observed data for :math:`y` (a :math:`p \\times n` array where
+            :math:`p` is the number of time steps and :math:`n` is the length
+            of :math:`y`)
 
         Returns
         -------
-        np.array
-            A proposal for new parameters
+        bool
+            Whether the new parameters were accepted or not
         """
-        return np.random.normal(self._current_params,
-                                self._log_prior.get_std_devs())
+        old_params = np.copy(self._current_params)
+        current_density = self.density(y_obs)
+        proposal = np.random.normal(self._current_params,
+                                    self._log_prior.get_std_devs())
+
+        # In order to calculate the density, we need to set the new parameters
+        # as the current parameters of the chain
+        self.set_params(proposal)
+        new_density = self.density(y_obs)
+
+        # Use the Metropolis algorithm to accept/reject the new parameters
+        r = np.exp(new_density - current_density)
+        u = np.random.uniform()
+        if r > u:
+            return True
+        else:
+            # We revert to the old parameters if we have rejected
+            self.set_params(old_params)
+            return False
+
+    def update_param_history(self, t: int):
+        """Writes a new row of the `self._param_history` df with the current
+        parameters.
+
+        Parameters
+        ----------
+        t : int
+            Current step of the iteration
+        """
+        df = self._param_history
+        df.loc[len(df)] = [t] + list(self._current_params) + [self._id]
 
     def get_params(self) -> np.array:
         """Retrieves the `current_params`
@@ -168,6 +210,16 @@ class Chain:
             The tempering parameter
         """
         return self._tempering
+
+    def get_param_history(self) -> pd.DataFrame:
+        """Retrieves the parameter history dataframe
+
+        Returns
+        -------
+        pd.DataFrame
+            The parameter history dataframe
+        """
+        return self._param_history
 
     def __str__(self):
         return f"Chain {self._id} with parameters {self._current_params}"

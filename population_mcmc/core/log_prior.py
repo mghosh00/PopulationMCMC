@@ -23,10 +23,10 @@ class LogPrior:
         """
         # Checks
         if bounds.shape[0] != 2 or bounds.shape[1] < 1:
-            raise ValueError("bounds must have exactly 2 rows and at least"
+            raise ValueError("bounds must have exactly 2 rows and at least "
                              "one column")
         if not all(np.greater(bounds[1, :], bounds[0, :])):
-            raise ValueError("Lower bounds must be in the first row and"
+            raise ValueError("Lower bounds must be in the first row and "
                              "upper bounds in the second row")
         self._bounds = bounds
         self._means = self._calculate_means()
@@ -70,15 +70,15 @@ class LogPrior:
         float
             The value of the log pdf at the given `theta`
         """
-        num_params = theta.shape[0]
-        if num_params == self._bounds.shape[0]:
+        num_params = len(theta)
+        if num_params == self._bounds.shape[1]:
             return sum([sp.stats.norm.logpdf(theta[i], self._means[i],
                                              self._std_devs[i])
                         for i in range(num_params)])
         else:
-            raise ValueError(f"The length of theta must match the number of"
+            raise ValueError(f"The length of theta must match the number of "
                              f"columns specified in self._bounds ({num_params}"
-                             f" != {self._bounds.shape[0]})")
+                             f" != {self._bounds.shape[1]})")
 
     def get_std_devs(self) -> np.array:
         """Gets the standard deviations from this `LogPrior`.
