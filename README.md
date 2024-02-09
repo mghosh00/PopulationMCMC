@@ -47,6 +47,8 @@ In order to run the `Simulator`, a list of required and optional arguments can b
 |`max_its`|`int`|The maximum number of iterations that the simulator will run for|`1000`|
 |`init_phase_its`|`int`|The number of iterations for the initial phase of the inference|`500`|
 
+Once these have been chosen, call `simulation.run()` to perform the inference, and `simulation.plot_traces()` to plot the traces of all the chains. An optional parameter, representing the chain id, can be passed to the plotting function. In this case, only the specified chain will be plotted (`id = 1` corresponds to the chain with the target distribution).
+
 ## References
 Jasra, A., Stephens, D. A. & Holmes, C. C. (2007).
 On population-based simulation for static inference
