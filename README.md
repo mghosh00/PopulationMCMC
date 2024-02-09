@@ -4,6 +4,24 @@
 
 This project provides a framework for using Bayesian inference to infer parameters from a system of ordinary differential equations (ODEs). The inference is carried out using a population-based MCMC algorithm as described in [this paper](https://link.springer.com/article/10.1007/s11222-007-9028-9) by Jasra et al. in Algorithm 1, and takes inspiration from the [pints.PopulationMCMC](https://pints.readthedocs.io/en/latest/mcmc_samplers/population_mcmc.html#pints.PopulationMCMC) class implemented in the [PINTS repository](https://github.com/pints-team/pints).
 
+## Explanation of the algorithm
+This algorithm follows the method described in the paper by [Jasra et al.](https://link.springer.com/article/10.1007/s11222-007-9028-9).
+
+Population MCMC is a single chain Monte Carlo method, but uses multiple internal chains during the update steps. This package is specifically for systems of ODEs, so we start with the system:	$`y'(t) = f(y, t; \theta)`$. Our goal is to find the posterior $`p(\theta|y)`$ using Bayesian inference techniques.
+
+The first step of the algorithm is to sample values $`\theta`$ from some prior distribution. Next, we initialise $N$ chains which all have different densities, depending on some tempering parameter, $`T_{i}`$ (where here, density refers to $`likelihood \times prior`$). Denoting each density by $`\pi_{i}(\theta_{i};y)`$ for $`i = 1,...,N`$, we define these densities as	$`\pi_{i}(\theta_{i};y) = (\pi_{1}(\theta_{i};y))^{1 - T_{i}}`$. Here, the tempering parameters are $`T_{i}=\frac{i - 1}{N}`$ using a Uniformly Spaced tempering scheme as described in the above paper. Note that chain $1$ is the target chain with the density we are trying to get.
+
+Next we do the following steps over each iteration of the algorithm:
+
+1. Mutate
+Randomly (with uniform probabiliy) choose chain $i$, and perform a mutation step exactly as in the Metropolis MCMC algorithm (with some acceptance/failure probability).
+2. Exchange
+Randomly (with uniform probability) choose a different chain $j$, and choose to exchange the parameters with probability $`min(1, A)`$, where	$`A=\frac{\pi_{i}(\theta_{j};y)\pi_{j}(\theta_{i};y)}{\pi_{i}(\theta_{i};y)\pi_{j}(\theta_{j};y)}`$.
+
+Then we terminate the algorithm once the target chain (chain $1$) has suitably converged to the desired parameters.
+
+For the tempered densities, the greater the value of $`T_{i}`$ (corresponding to a higher "temperature"), the flatter the density function will be. This implies that accepting an exchange with a much lower temperature becomes very likely if the higher temperature density has better parameters than the lower temperature density, as $A$ will be large in this case. This is the underlying hope as to why the Population MCMC may perform better than other single chain methods, and it does not take up the same time cost as multi-chain methods as it only updates one chain each time step.
+
 ## Installation
 To install a copy of the project, in the terminal run:
 
@@ -12,13 +30,6 @@ To install a copy of the project, in the terminal run:
 To make sure all dependencies are installed, in the current directory run:
 
 	pip install ./PopulationMCMC
-
-## Explanation of the algorithm
-This algorithm follows the method described in the paper by [Jasra et al.](https://link.springer.com/article/10.1007/s11222-007-9028-9).
-
-Population MCMC is a single chain Monte Carlo method, but uses multiple internal chains during the update steps. This package is specifically for systems of ODEs, so we start with the system:	$`y'(t) = f(y, t; \theta)`$. Our goal is to find the posterior $`p(\theta|y)`$ using Bayesian inference techniques.
-
-The first step of the algorithm is to sample values $`\theta`$ from some prior distribution. Next, we initialise $N$ chains which all have different densities, depending on some tempering parameter, $`T_{i}`$ (where here, density refers to $`likelihood \times prior`$). Denoting each density by $`\pi_{i}(\theta;y)`$ for $`i = 1,\cdot,N`$, we define these densities as	$`\pi_{i}(\theta;y) = (\pi_{1}(\theta;y))^{1 - T_{i}}`$. Here, the tempering parameters are $`T_{i}=\frac{i - 1}{N}`$ using a Uniformly Spaced tempering scheme as described in the above paper. 
 
 ## Using the framework to run the algorithm
 From here, navigate to PopulationMCMC/population_mcmc/examples/logistic_growth_example.py to see an example of how to use the package. Below is a step-by-step description of how to run your own examples:
