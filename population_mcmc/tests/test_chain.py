@@ -43,7 +43,7 @@ class TestChain(TestCase):
                                             "between 1 and N")
 
     def test___init__(self):
-        chain = Chain(self.id, self.num_chains, self.ode_system, self.prior,
+        chain = Chain(self._id, self.num_chains, self.ode_system, self.prior,
                       self.param_names)
         self.assertEqual(4, chain._id)
         self.assertEqual(6, chain._num_chains)
@@ -52,7 +52,7 @@ class TestChain(TestCase):
         self.assertIsNone(chain._current_params)
         self.assertEqual(0.5, chain._tempering)
         self.assertEqual(["t", "a", "b", "c", "id"],
-                         chain._param_history.columns)
+                         chain._param_history.columns.tolist())
 
     def test__log_prior_pdf(self):
         with mock.patch('population_mcmc.LogPrior.__call__') as mock_call:
@@ -72,6 +72,7 @@ class TestChain(TestCase):
         mock_prior.return_value = 4.0
         density = chain.density(self.y_obs)
         self.assertEqual(7.0, density)
+
 
 if __name__ == "__main__":
     unittest.main()
