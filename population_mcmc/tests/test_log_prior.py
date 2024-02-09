@@ -41,6 +41,11 @@ class TestLogPrior(TestCase):
         self.assertEqual(str(ve.exception), f"The length of theta must match "
                                             f"the number of columns specified "
                                             f"in self._bounds (2 != 3)")
+        with self.assertRaises(ValueError) as ve2:
+            lp = LogPrior(self.bounds)
+            lp(None)
+        self.assertEqual(str(ve2.exception), "Chain has not been "
+                                             "properly initialised yet")
 
     def test___call__(self):
         theta = np.array([1.5, 2.5, 3.5])
