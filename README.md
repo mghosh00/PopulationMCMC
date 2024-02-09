@@ -1,4 +1,4 @@
-### Population Markov Chain Monte Carlo ###
+# Population Markov Chain Monte Carlo
 [![Documentation Status](https://readthedocs.org/projects/populationmcmc/badge/?version=latest)](https://populationmcmc.readthedocs.io/en/latest/?badge=latest)
 [![codecov](https://codecov.io/gh/mghosh00/PopulationMCMC/graph/badge.svg?token=6CRIQSLSRN)](https://codecov.io/gh/mghosh00/PopulationMCMC)
 This project provides a framework for using Bayesian inference to infer parameters from a system of ordinary differential equations (ODEs). The inference is carried out using a population-based MCMC algorithm as described in [this paper](https://link.springer.com/article/10.1007/s11222-007-9028-9) by Jasra et al. in Algorithm 1, and takes inspiration from the [pints.PopulationMCMC](https://pints.readthedocs.io/en/latest/mcmc_samplers/population_mcmc.html#pints.PopulationMCMC) class implemented in the [PINTS repository](https://github.com/pints-team/pints).
