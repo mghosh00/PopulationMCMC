@@ -5,7 +5,7 @@
 
 import numpy as np
 
-from population_mcmc import ODESystem
+from .ode_system import ODESystem
 
 
 class DataGenerator:

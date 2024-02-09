@@ -5,10 +5,10 @@
 import numpy as np
 import pandas as pd
 
-from population_mcmc import ODESystem
-from population_mcmc import LogPrior
-from population_mcmc import Chain
-from population_mcmc import Plotter
+from .ode_system import ODESystem
+from .log_prior import LogPrior
+from .chain import Chain
+from .plotter import Plotter
 
 
 class Simulator:
