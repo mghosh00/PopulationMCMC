@@ -38,9 +38,9 @@ class TestLogPrior(TestCase):
         with self.assertRaises(ValueError) as ve:
             lp = LogPrior(self.bounds)
             lp(invalid_theta)
-        self.assertEqual(str(ve.exception), f"The length of theta must match "
-                                            f"the number of columns specified "
-                                            f"in self._bounds (2 != 3)")
+        self.assertEqual(str(ve.exception), "The length of theta must match "
+                                            "the number of columns specified "
+                                            "in self._bounds (2 != 3)")
         with self.assertRaises(ValueError) as ve2:
             lp = LogPrior(self.bounds)
             lp(None)
