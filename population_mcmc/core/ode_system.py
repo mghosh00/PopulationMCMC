@@ -60,7 +60,7 @@ class ODESystem:
             each of the different :math:`y_{i}`
         """
         theta_tuple = tuple([theta[i] for i in range(len(theta))]) \
-            if theta.shape else tuple(theta)
+            if theta.shape else tuple([float(theta)])
         sol = si.odeint(self._rhs, self._y_init, self._times, args=theta_tuple)
         df_dict = {'t': self._times}
         for i in range(self.get_dim_y()):

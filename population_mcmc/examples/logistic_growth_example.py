@@ -10,10 +10,10 @@ from population_mcmc import Simulator
 
 
 # 1. Setting up the ODE system
-def logistic_rhs(y: float, t: float, r: float, k: float) -> float:
+def logistic_rhs(y: float, t: float, r: float, k: float) -> np.array:
     """RHS of the logistic growth equation
     """
-    return r * y * (1 - y / k)
+    return np.array(r * y * (1 - y / k))
 
 
 y_init = np.array(5.0)
