@@ -5,10 +5,10 @@
 import numpy as np
 import pandas as pd
 
-from population_mcmc import ODESystem
-from population_mcmc import LogPrior
-from population_mcmc import Chain
-from population_mcmc import Plotter
+from .ode_system import ODESystem
+from .log_prior import LogPrior
+from .chain import Chain
+from .plotter import Plotter
 
 
 class Simulator:
@@ -30,7 +30,7 @@ class Simulator:
             :math:`p` is the number of time steps and :math:`n` is the length
             of :math:`y`)
         param_bounds : np.array
-            A :math:`2 \\times m` array, where :math:`m` is the number of
+            A :math:`2 \\times (m+n)` array, where :math:`m` is the number of
             parameters, containing the lower and upper bounds of the
             parameters. These must also contain bounds for the standard
             deviations of the :math:`y_{i}`

@@ -70,6 +70,8 @@ class LogPrior:
         float
             The value of the log pdf at the given `theta`
         """
+        if theta is None:
+            raise ValueError("Chain has not been properly initialised yet")
         num_params = len(theta)
         if num_params == self._bounds.shape[1]:
             return sum([sp.stats.norm.logpdf(theta[i], self._means[i],

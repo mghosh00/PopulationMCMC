@@ -2,5 +2,7 @@
 source = population_mcmc
 omit =
 	*/tests/*
-	*/__init__.py
 	*/version_info.py
+	population_mcmc/run_tests.py
+	setup.py
+	*/__init__.py

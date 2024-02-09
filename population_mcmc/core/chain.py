@@ -6,8 +6,8 @@ import numpy as np
 import scipy as sp
 import pandas as pd
 
-from population_mcmc import ODESystem
-from population_mcmc import LogPrior
+from .ode_system import ODESystem
+from .log_prior import LogPrior
 
 
 class Chain:
