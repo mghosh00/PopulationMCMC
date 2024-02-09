@@ -43,8 +43,8 @@ class Chain:
         self._log_prior = log_prior
         self._current_params = None
         self._tempering = self._calculate_tempering()
-        self._param_history = pd.DataFrame(columns=(["t"] + param_names +
-                                                    ["id"]))
+        self._param_history = pd.DataFrame(columns=(["t"] + param_names
+                                                    + ["id"]))
 
     def _calculate_tempering(self) -> float:
         """Calculates the tempering parameter for the chain. This lies between
