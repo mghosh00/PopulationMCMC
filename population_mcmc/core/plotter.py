@@ -2,7 +2,7 @@
 # Class to plot aspects of the population MCMC (helper class)
 #
 import pandas as pd
-from plotnine import ggplot, aes, geom_line, geom_point, geom_path, ggtitle
+from plotnine import ggplot, aes, geom_line, ggtitle
 
 
 class Plotter:
@@ -22,8 +22,8 @@ class Plotter:
         """
         column_names = df.columns
         for param in column_names[1:-1]:
-            plot = (ggplot(df, aes(x='t', y=param)) +
-                    geom_line(aes(color='factor(id)')) +
-                    ggtitle(f"Traces for {param} ({title})")
+            plot = (ggplot(df, aes(x='t', y=param))
+                    + geom_line(aes(color='factor(id)'))
+                    + ggtitle(f"Traces for {param} ({title})")
                     )
             plot.save(f"plots/{title}_traces_{param}.png")
