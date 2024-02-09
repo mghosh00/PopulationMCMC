@@ -2,7 +2,6 @@ import unittest
 from unittest import TestCase
 from unittest import mock
 import numpy as np
-import scipy as sp
 
 from population_mcmc.core import ODESystem
 from population_mcmc.core import LogPrior

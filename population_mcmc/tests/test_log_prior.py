@@ -23,15 +23,15 @@ class TestLogPrior(TestCase):
     def test___init___invalid(self):
         invalid_size_bounds = np.array([[2, 3], [3, 4], [4, 5]])
         with self.assertRaises(ValueError) as ve1:
-            lp = LogPrior(invalid_size_bounds)
+            LogPrior(invalid_size_bounds)
         self.assertEqual(str(ve1.exception), "bounds must have exactly 2 "
                                              "rows and at least one column")
         invalid_order_bounds = np.array([[2, 3, 4], [3, 4, 3]])
         with self.assertRaises(ValueError) as ve2:
-            lp = LogPrior(invalid_order_bounds)
+            LogPrior(invalid_order_bounds)
         self.assertEqual(str(ve2.exception), "Lower bounds must be in the "
-                                             "first row and upper bounds in the "
-                                             "second row")
+                                             "first row and upper bounds in "
+                                             "the second row")
 
     def test___call___invalid(self):
         invalid_theta = np.array([3, 4])

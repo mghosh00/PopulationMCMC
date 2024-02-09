@@ -30,7 +30,7 @@ class Simulator:
             :math:`p` is the number of time steps and :math:`n` is the length
             of :math:`y`)
         param_bounds : np.array
-            A :math:`2 \\times m` array, where :math:`m` is the number of
+            A :math:`2 \\times (m+n)` array, where :math:`m` is the number of
             parameters, containing the lower and upper bounds of the
             parameters. These must also contain bounds for the standard
             deviations of the :math:`y_{i}`
