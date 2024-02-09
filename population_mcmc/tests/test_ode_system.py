@@ -35,7 +35,8 @@ class TestODESystem(TestCase):
         self.assertEqual(self.times.tolist(), system._times.tolist())
         self.assertEqual(self.title, system._title)
         self.assertEqual(1, system._len_theta)
-        system_2 = ODESystem(self.rhs_2d, np.array([1, 2]), self.times, "ode_2d")
+        system_2 = ODESystem(self.rhs_2d, np.array([1, 2]), self.times,
+                             "ode_2d")
         self.assertEqual(3, system_2._len_theta)
 
     def test_solve_simple(self):
@@ -56,12 +57,14 @@ class TestODESystem(TestCase):
     def test_get_dim_y(self):
         system = ODESystem(self.rhs, self.y_init, self.times, self.title)
         self.assertEqual(1, system.get_dim_y())
-        system_2 = ODESystem(self.rhs_2d, np.array([1, 2]), self.times, "ode_2d")
+        system_2 = ODESystem(self.rhs_2d, np.array([1, 2]), self.times,
+                             "ode_2d")
         self.assertEqual(2, system_2.get_dim_y())
 
     def test_get_title(self):
         system = ODESystem(self.rhs, self.y_init, self.times, self.title)
         self.assertEqual(1, system.get_len_theta())
+
 
 if __name__ == "__main__":
     unittest.main()
