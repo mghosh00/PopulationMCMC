@@ -13,6 +13,13 @@ To make sure all dependencies are installed, in the current directory run:
 
 	pip install ./PopulationMCMC
 
+## Explanation of the algorithm
+This algorithm follows the method described in the paper by [Jasra et al.](https://link.springer.com/article/10.1007/s11222-007-9028-9).
+
+Population MCMC is a single chain Monte Carlo method, but uses multiple internal chains during the update steps. This package is specifically for systems of ODEs, so we start with the system:	$`y'(t) = f(y, t; \theta)`$. Our goal is to find the posterior $`p(\theta|y)`$ using Bayesian inference techniques.
+
+The first step of the algorithm is to sample values $`\theta`$ from some prior distribution. Next, we initialise $N$ chains which all have different densities, depending on some tempering parameter, $`T_{i}`$ (where here, density refers to $`likelihood \times prior`$). Denoting each density by $`\pi_{i}(\theta;y)`$ for $`i = 1,\cdot,N`$, we define these densities as	$`\pi_{i}(\theta;y) = (\pi_{1}(\theta;y))^{1 - T_{i}}`$. Here, the tempering parameters are $`T_{i}=\frac{i - 1}{N}`$ using a Uniformly Spaced tempering scheme as described in the above paper. 
+
 ## Using the framework to run the algorithm
 From here, navigate to PopulationMCMC/population_mcmc/examples/logistic_growth_example.py to see an example of how to use the package. Below is a step-by-step description of how to run your own examples:
 
@@ -48,6 +55,9 @@ In order to run the `Simulator`, a list of required and optional arguments can b
 |`init_phase_its`|`int`|The number of iterations for the initial phase of the inference|`500`|
 
 Once these have been chosen, call `simulation.run()` to perform the inference, and `simulation.plot_traces()` to plot the traces of all the chains. An optional parameter, representing the chain id, can be passed to the plotting function. In this case, only the specified chain will be plotted (`id = 1` corresponds to the chain with the target distribution).
+
+## Documentation
+All classes are documented on readthedocs.io [here](https://populationmcmc.readthedocs.io/en/latest/).
 
 ## References
 Jasra, A., Stephens, D. A. & Holmes, C. C. (2007).
