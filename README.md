@@ -16,7 +16,7 @@ To make sure all dependencies are installed, in the current directory run:
 ## Using the framework to run the algorithm
 From here, navigate to PopulationMCMC/population_mcmc/examples/logistic_growth_example.py to see an example of how to use the package. Below is a step-by-step description of how to run your own examples:
 
-# Set up the ODE System
+### Set up the ODE System
 Firstly, create a `rhs` function, which needs to have the following signature:
 ```
 def rhs(y: np.array, t: float, *theta: tuple[float]) -> np.array
@@ -25,7 +25,7 @@ where `y` is an $n$-dimensional array, `*theta` is an $m$-dimensional parameter 
 
 Next, `y_init` ($n$-dimensional array containing initial values of $y$) and `times` ($p$-dimensional array containing the range of times for the numerical solve) need to be specified before instantiating an `ODESystem` ([docs here](https://populationmcmc.readthedocs.io/en/latest/core.html#population_mcmc.ODESystem)).
 
-# Generate/import data to perform inference against
+### Generate/import data to perform inference against
 From here, there are two options. 
 1. Choose ground truth values of the parameters `theta` and hyperparameters `sigma` representing standard deviations for each element of $y$ (`y_std_devs`).
 2. Import your own data with unknown parameters to be determined by the model.
@@ -34,7 +34,7 @@ For option 1, simply input the `ODESystem` along with the chosen `theta` and `si
 
 For option 2, the data must be converted into a $p\times n$ array, with rows corresponding to timesteps and columns to elements of $y$.
 
-# Run the Population MCMC algorithm
+### Run the Population MCMC algorithm
 In order to run the `Simulator`, a list of required and optional arguments can be passed to the constructor method, as described in the table below.
 
 |Argument|Type|Description|Default (if optional)|
