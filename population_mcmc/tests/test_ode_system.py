@@ -2,8 +2,7 @@ import unittest
 from unittest import TestCase
 import numpy as np
 
-import population_mcmc
-from population_mcmc.core.ode_system import ODESystem
+from population_mcmc.core import ODESystem
 
 
 class TestODESystem(TestCase):

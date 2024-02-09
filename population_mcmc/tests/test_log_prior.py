@@ -3,8 +3,7 @@ from unittest import TestCase
 import numpy as np
 import scipy as sp
 
-import population_mcmc
-from population_mcmc.core.log_prior import LogPrior
+from population_mcmc.core import LogPrior
 
 
 class TestLogPrior(TestCase):
