@@ -2,8 +2,9 @@ import unittest
 from unittest import TestCase
 import numpy as np
 
-from ode_system import ODESystem
-from data_generator import DataGenerator
+import population_mcmc
+from population_mcmc.core.ode_system import ODESystem
+from population_mcmc.core.data_generator import DataGenerator
 
 
 class TestDataGenerator(TestCase):
